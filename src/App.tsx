@@ -1,57 +1,63 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
 import './App.css';
+import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
+import { Container } from '@mui/system';
+import SignIn from './features/auth/SignIn';
+import Copyright from './components/Copyright';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route
+} from "react-router-dom";
+import SignUp from './features/auth/SignUp';
+import Topbar from './components/Topbar';
+import HomePage from './features/home/Home';
+
+declare module '@mui/material/styles' {
+  interface Palette {
+    appBar: Palette['primary'];
+  }
+  interface PaletteOptions {
+    appBar: PaletteOptions['primary'];
+  }
+}
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#472365'
+    },
+    secondary: {
+      main: '#95DDD4'
+    },
+    appBar: {
+      main: '#fff'
+    },
+    background: {
+      default: '#F8F8F8',
+      paper: '#fff'
+    }
+  }
+});
+
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
+    <Router>
+
+      <ThemeProvider theme={theme}>
+        <Container>
+          <CssBaseline />
+          <Topbar />
+          <Routes>
+            <Route path='/login' element={<SignIn />} />
+            <Route path='/register' element={<SignUp />} />
+            <Route path='/home' element={<HomePage />} />
+          </Routes>
+          <Copyright sx={{ mt: 8, mb: 4 }} />
+        </Container>
+      </ThemeProvider>
+    </Router>
   );
 }
 
